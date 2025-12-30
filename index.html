@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Oore-ofe! 🎉</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5e6d3 0%, #e8d4b8 50%, #d4c4a8 100%);
+            min-height: 100vh;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 3rem 1rem;
+            text-align: center;
+        }
+
+        .header-title {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .header-title h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, #b8860b, #daa520, #cd853f);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .heart-icon {
+            color: #cd853f;
+            fill: #cd853f;
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            color: #8b7355;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .special-message {
+            max-width: 600px;
+            margin: 0 auto;
+            color: #6b5d4f;
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .section {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            color: #8b7355;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .upload-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, #b8860b, #daa520);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+            font-weight: 600;
+            margin: 0 auto 2rem;
+            transition: all 0.3s;
+            width: fit-content;
+        }
+
+        .upload-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(184, 134, 11, 0.4);
+        }
+
+        .upload-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .photo-item {
+            position: relative;
+            aspect-ratio: 1;
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .photo-item:hover {
+            transform: scale(1.05);
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .remove-btn {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: #dc2626;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .photo-item:hover .remove-btn {
+            opacity: 1;
+        }
+
+        .empty-state {
+            text-align: center;
+            color: #9ca3af;
+            padding: 3rem;
+        }
+
+        .loading-state {
+            text-align: center;
+            color: #8b7355;
+            padding: 2rem;
+        }
+
+        .wish-form {
+            background: linear-gradient(135deg, #f5e6d3, #e8d4b8);
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid #d4c4a8;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #b8860b;
+        }
+
+        textarea.form-input {
+            resize: none;
+            height: 100px;
+            font-family: inherit;
+        }
+
+        .submit-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, #8b7355, #b8860b);
+            color: white;
+            padding: 0.75rem 2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+            font-weight: 600;
+            margin: 0 auto;
+            transition: all 0.3s;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(139, 115, 85, 0.4);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .wishes-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .wish-card {
+            background: linear-gradient(135deg, #f5e6d3, #e8d4b8);
+            padding: 1.5rem;
+            border-radius: 15px;
+            border-left: 4px solid #b8860b;
+        }
+
+        .wish-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .wish-name {
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: #8b7355;
+        }
+
+        .wish-date {
+            font-size: 0.8rem;
+            color: #9ca3af;
+        }
+
+        .wish-message {
+            color: #6b5d4f;
+            line-height: 1.6;
+            word-wrap: break-word;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+        }
+
+        .modal-content img {
+            max-width: 100%;
+            max-height: 90vh;
+            object-fit: contain;
+            border-radius: 10px;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+
+        .error-message {
+            background: #fee;
+            color: #c00;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .header-title h1 {
+                font-size: 1.8rem;
+            }
+
+            .subtitle {
+                font-size: 1.1rem;
+            }
+
+            .special-message {
+                font-size: 1rem;
+            }
+
+            .photo-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="header-title">
+            <svg class="heart-icon" width="40" height="40" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+            </svg>
+            <h1>Happy Birthday, Oore-ofe Deborah Akande!</h1>
+            <svg class="heart-icon" width="40" height="40" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+            </svg>
+        </div>
+        <p class="subtitle">Happy Birthday to Someone Rare</p>
+        <p class="special-message">
+            Your birthday only comes once every four years but you deserve to be celebrated every single one. 
+            Today isn't about the calendar, it's about you.
+        </p>
+    </div>
+
+    <div class="container">
+        <!-- Photo Gallery -->
+        <section class="section">
+            <h2 class="section-title">Beautiful Memories</h2>
+            
+            <label class="upload-btn" id="uploadBtn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="17 8 12 3 7 8"></polyline>
+                    <line x1="12" y1="3" x2="12" y2="15"></line>
+                </svg>
+                <span>Add Photos</span>
+                <input type="file" id="photoUpload" multiple accept="image/*" style="display: none;">
+            </label>
+
+            <div id="photoLoading" class="loading-state" style="display: none;">
+                Loading photos...
+            </div>
+            <div id="photoGrid" class="photo-grid"></div>
+            <div id="emptyPhotos" class="empty-state">
+                <p>No photos yet. Upload some beautiful memories!</p>
+            </div>
+        </section>
+
+        <!-- Birthday Wishes -->
+        <section class="section">
+            <h2 class="section-title">Birthday Wishes</h2>
+
+            <div class="wish-form">
+                <div class="form-group">
+                    <input type="text" id="wishName" class="form-input" placeholder="Your Name" maxlength="50">
+                </div>
+                <div class="form-group">
+                    <textarea id="wishMessage" class="form-input" placeholder="Write your birthday wish..." maxlength="500"></textarea>
+                </div>
+                <button class="submit-btn" id="submitWishBtn" onclick="submitWish()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="22" y1="2" x2="11" y2="13"></line>
+                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                    </svg>
+                    <span>Send Wish</span>
+                </button>
+            </div>
+
+            <div id="wishLoading" class="loading-state" style="display: none;">
+                Loading wishes...
+            </div>
+            <div id="wishesList" class="wishes-list"></div>
+            <div id="emptyWishes" class="empty-state">
+                <p>Be the first to leave a birthday wish!</p>
+            </div>
+        </section>
+    </div>
+
+    <!-- Modal -->
+    <div id="modal" class="modal" onclick="closeModal()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeModal()">×</button>
+            <img id="modalImage" src="" alt="Full size">
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        // ===================================
+        // FIREBASE CONFIGURATION
+        // ===================================
+        // REPLACE THESE WITH YOUR FIREBASE PROJECT CREDENTIALS
+        const firebaseConfig = {
+            apiKey: "AIzaSyAkatLI2ug8H_tXjhKJY6JavIYOZjQ5p5M",
+            authDomain: "ooreofe-birthday.firebaseapp.com",
+            projectId: "ooreofe-birthday",
+            storageBucket: "ooreofe-birthday.firebasestorage.app",
+            messagingSenderId: "280937176648",
+            appId: "1:280937176648:web:01167e250168291f9a827d"
+        };
+
+        // Initialize Firebase
+        let app, db;
+        try {
+            app = initializeApp(firebaseConfig);
+            db = getFirestore(app);
+            console.log("Firebase initialized successfully");
+        } catch (error) {
+            console.error("Firebase initialization error:", error);
+            showError("Firebase configuration error. Please check your credentials.");
+        }
+
+        // Utility function to escape HTML
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function showError(message) {
+            const container = document.querySelector('.container');
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'error-message';
+            errorDiv.textContent = message;
+            container.insertBefore(errorDiv, container.firstChild);
+            setTimeout(() => errorDiv.remove(), 5000);
+        }
+
+        // ===================================
+        // PHOTOS
+        // ===================================
+        let photosListener = null;
+
+        async function loadPhotos() {
+            if (!db) return;
+            
+            const photoGrid = document.getElementById('photoGrid');
+            const emptyPhotos = document.getElementById('emptyPhotos');
+            const photoLoading = document.getElementById('photoLoading');
+
+            try {
+                photoLoading.style.display = 'block';
+                photoGrid.innerHTML = '';
+                emptyPhotos.style.display = 'none';
+
+                // Set up real-time listener
+                const q = query(collection(db, "photos"), orderBy("createdAt", "desc"));
+                
+                photosListener = onSnapshot(q, (snapshot) => {
+                    photoGrid.innerHTML = '';
+                    
+                    if (snapshot.empty) {
+                        emptyPhotos.style.display = 'block';
+                        photoLoading.style.display = 'none';
+                        return;
+                    }
+
+                    emptyPhotos.style.display = 'none';
+                    photoLoading.style.display = 'none';
+
+                    snapshot.forEach((docSnap) => {
+                        const photo = docSnap.data();
+                        const photoId = docSnap.id;
+                        
+                        const photoItem = document.createElement('div');
+                        photoItem.className = 'photo-item';
+                        photoItem.onclick = () => openModal(photo.url);
+                        
+                        photoItem.innerHTML = `
+                            <img src="${escapeHtml(photo.url)}" alt="Memory">
+                            <button class="remove-btn" onclick="event.stopPropagation(); window.removePhoto('${photoId}')">×</button>
+                        `;
+                        
+                        photoGrid.appendChild(photoItem);
+                    });
+                }, (error) => {
+                    console.error("Error loading photos:", error);
+                    photoLoading.style.display = 'none';
+                    showError("Error loading photos. Please refresh the page.");
+                });
+
+            } catch (error) {
+                console.error("Error setting up photo listener:", error);
+                photoLoading.style.display = 'none';
+                showError("Error loading photos.");
+            }
+        }
+
+        // Photo upload
+        document.getElementById('photoUpload').addEventListener('change', async function(e) {
+            if (!db) {
+                showError("Firebase not initialized. Please check configuration.");
+                return;
+            }
+
+            const files = Array.from(e.target.files);
+            const uploadBtn = document.getElementById('uploadBtn');
+            
+            uploadBtn.style.opacity = '0.5';
+            uploadBtn.style.pointerEvents = 'none';
+
+            for (const file of files) {
+                if (file.size > 5000000) { // 5MB limit
+                    showError('Photo is too large. Please choose a smaller image (max 5MB).');
+                    continue;
+                }
+
+                const reader = new FileReader();
+                reader.onload = async function(event) {
+                    try {
+                        await addDoc(collection(db, "photos"), {
+                            url: event.target.result,
+                            createdAt: new Date()
+                        });
+                    } catch (error) {
+                        console.error("Error uploading photo:", error);
+                        showError("Error uploading photo. Please try again.");
+                    }
+                };
+                reader.readAsDataURL(file);
+            }
+
+            e.target.value = '';
+            uploadBtn.style.opacity = '1';
+            uploadBtn.style.pointerEvents = 'auto';
+        });
+
+        window.removePhoto = async function(photoId) {
+            if (!db) return;
+            
+            if (!confirm('Are you sure you want to remove this photo?')) {
+                return;
+            }
+
+            try {
+                await deleteDoc(doc(db, "photos", photoId));
+            } catch (error) {
+                console.error("Error removing photo:", error);
+                showError("Error removing photo. Please try again.");
+            }
+        };
+
+        function openModal(url) {
+            document.getElementById('modalImage').src = url;
+            document.getElementById('modal').classList.add('active');
+        }
+
+        window.closeModal = function() {
+            document.getElementById('modal').classList.remove('active');
+        };
+
+        // ===================================
+        // WISHES
+        // ===================================
+        let wishesListener = null;
+
+        async function loadWishes() {
+            if (!db) return;
+
+            const wishesList = document.getElementById('wishesList');
+            const emptyWishes = document.getElementById('emptyWishes');
+            const wishLoading = document.getElementById('wishLoading');
+
+            try {
+                wishLoading.style.display = 'block';
+                wishesList.innerHTML = '';
+                emptyWishes.style.display = 'none';
+
+                // Set up real-time listener
+                const q = query(collection(db, "wishes"), orderBy("createdAt", "desc"));
+                
+                wishesListener = onSnapshot(q, (snapshot) => {
+                    wishesList.innerHTML = '';
+                    
+                    if (snapshot.empty) {
+                        emptyWishes.style.display = 'block';
+                        wishLoading.style.display = 'none';
+                        return;
+                    }
+
+                    emptyWishes.style.display = 'none';
+                    wishLoading.style.display = 'none';
+
+                    snapshot.forEach((docSnap) => {
+                        const wish = docSnap.data();
+                        
+                        const wishCard = document.createElement('div');
+                        wishCard.className = 'wish-card';
+                        
+                        const date = wish.createdAt?.toDate ? 
+                            wish.createdAt.toDate().toLocaleDateString() : 
+                            new Date().toLocaleDateString();
+                        
+                        wishCard.innerHTML = `
+                            <div class="wish-header">
+                                <span class="wish-name">${escapeHtml(wish.name)}</span>
+                                <span class="wish-date">${date}</span>
+                            </div>
+                            <p class="wish-message">${escapeHtml(wish.message)}</p>
+                        `;
+                        
+                        wishesList.appendChild(wishCard);
+                    });
+                }, (error) => {
+                    console.error("Error loading wishes:", error);
+                    wishLoading.style.display = 'none';
+                    showError("Error loading wishes. Please refresh the page.");
+                });
+
+            } catch (error) {
+                console.error("Error setting up wishes listener:", error);
+                wishLoading.style.display = 'none';
+                showError("Error loading wishes.");
+            }
+        }
+
+        window.submitWish = async function() {
+            if (!db) {
+                showError("Firebase not initialized. Please check configuration.");
+                return;
+            }
+
+            const nameInput = document.getElementById('wishName');
+            const messageInput = document.getElementById('wishMessage');
+            const submitBtn = document.getElementById('submitWishBtn');
+            
+            const name = nameInput.value.trim();
+            const message = messageInput.value.trim();
+
+            if (!name || !message) {
+                showError('Please fill in both your name and message');
+                return;
+            }
+
+            if (message.length > 500) {
+                showError('Message is too long. Please keep it under 500 characters.');
+                return;
+            }
+
+            submitBtn.disabled = true;
+
+            try {
+                await addDoc(collection(db, "wishes"), {
+                    name: name,
+                    message: message,
+                    createdAt: new Date()
+                });
+
+                nameInput.value = '';
+                messageInput.value = '';
+            } catch (error) {
+                console.error("Error submitting wish:", error);
+                showError("Error submitting wish. Please try again.");
+            } finally {
+                submitBtn.disabled = false;
+            }
+        };
+
+        // Initialize
+        loadPhotos();
+        loadWishes();
+
+        // Cleanup on page unload
+        window.addEventListener('beforeunload', () => {
+            if (photosListener) photosListener();
+            if (wishesListener) wishesListener();
+        });
+    </script>
+</body>
+</html>
